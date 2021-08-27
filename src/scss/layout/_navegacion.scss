@@ -1,0 +1,38 @@
+.barra {
+    display: flex;
+    flex-direction: column;
+    padding-top: $separacion2;
+
+    @include tablet {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .logo {
+        // flex-grow: 2;
+        width: 20rem;
+    }
+}
+
+.navegacion {    
+    @include tablet {
+        display: flex;
+        align-items: center;
+    }
+    a {
+        color: $blanco;
+        text-decoration: none;
+        font-size: 2rem;
+        display: block;
+        text-align: center;
+
+        @include tablet {
+            margin-right: $separacion2;
+    
+            &:last-of-type {
+                margin: 0;
+            }
+        }
+    }
+    
+}
