@@ -26,6 +26,23 @@
         display: block;
         text-align: center;
 
+        // &::after {
+        //     content: '';
+        //     height: .3rem;
+        //     width: 100%;
+        //     background-color: $verde;
+        //     visibility: hidden;
+        //     display: block;
+        // }
+
+        &:hover {
+            color: $verde;
+
+            // &::after {
+            //     visibility: visible;
+            // }
+        }
+
         @include tablet {
             margin-right: $separacion2;
     

@@ -2,6 +2,7 @@
 *SECCION BLOG
 *=================================================================*/
 .seccion-inferior {
+    
     @include tablet {
         display: grid;
         grid-template-columns: 2fr 1fr;
@@ -38,7 +39,7 @@
             height: .3rem;
             margin: 1rem 0;
             background-color: $verde;
-            transition: all .3s ease-in-out;
+            transition: all .5s ease-in-out .2s;
         }
     }
 }
@@ -51,13 +52,15 @@
             }
         }
     }
+
+}
+
+.informacion-meta {
+    margin-bottom: 2rem;
     span {
         color: $amarillo;
     }
-    .informacion-meta {
-        margin-bottom: 2rem;
-    }    
-}
+}    
 
 .testimonial {
     background-color: $verde;

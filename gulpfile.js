@@ -21,11 +21,11 @@ const paths = {
 // css es una función que se puede llamar automaticamente
 function css() {
     return src(paths.scss)
-        // .pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(sass())
-        // .pipe(postcss([autoprefixer(), cssnano()]))
+        .pipe(postcss([autoprefixer(), cssnano()]))
         .pipe(postcss([autoprefixer()]))
-        // .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write('.'))
         .pipe( dest('./build/css') );
 }
 

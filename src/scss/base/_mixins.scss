@@ -31,6 +31,8 @@
     padding: 1rem 3rem;
     margin-top: 3rem;
     display: $display;
+    border: none; //aplica a input type="submit"
+    cursor: pointer;
 
     &:hover {
         background-color: darken($bgColor, 7);
