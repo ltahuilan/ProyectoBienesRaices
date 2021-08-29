@@ -15,11 +15,12 @@
     }
 
     .navegacion {
-
+        visibility: visible;
+        opacity: 1;
+        height: auto;
         @include tablet {
             display: flex;
             justify-content: center;
         }
-
     }
 }
