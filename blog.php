@@ -1,38 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bines Raices - Blog</title>
-    <link rel="stylesheet" href="build/css/app.css">
-</head>
-<body>
-    
-    <header class="header">
-        <div class="contenedor contenido-header">
-            <div class="barra">
-                <a href="index.html" class="logo">
-                    <img src="src/img/logo.svg" alt="Logo Bienes Raices">
-                </a>
-    
-                <div class="mobil-menu">
-                    <img src="build/img/barras.svg" alt="icono mobil-menu">
-                </div>
-
-                <div class="derecha">
-                    <img src="build/img/dark-mode.svg" alt="icono dark-mode" class="dark-mode-boton">
-                    <nav class="navegacion">
-                        <a href="nosotros.html">Nosotros</a>
-                        <a href="anuncios.html">Anuncios</a>
-                        <a href="blog.html">Blog</a>
-                        <a href="contacto.html">Contacto</a>
-                    </nav>
-                </div>
-            </div><!--.barra-->
-        </div>
-
-    </header>
+<?php 
+    include 'php/templates/header.php';
+?>
 
     <main class="contenedor seccion contenido-centrado">
         <h1>Nuestro Blog</h1>
@@ -46,7 +14,7 @@
                 </picture>
             </div>
             <div class="texto-entrada">
-                <a href="entrada-blog.html">
+                <a href="entrada-blog.php">
                     <h4>Terraza en el techo de tu casa</h4>
                     <p class="informacion-meta">Escrito el: <span>27/08/2021</span> Por: <span>Admin</span></p>
                     <p>Consejos para construir una terraza en el techo de tu casa con los mejores materiales y ahorrando dinero 
@@ -64,7 +32,7 @@
                 </picture>
             </div>
             <div class="texto-entrada">
-                <a href="entrada-blog.html">
+                <a href="entrada-blog.php">
                     <h4>Gu&iacute;a para la decoraci&oacute;n de tu hogar</h4>
                     <p class="informacion-meta">Escrito el: <span>27/08/2021</span> Por: <span>Admin</span></p>
                     <p>Maximiza el espacio en tu hogar con esta gu&iacute;a, aprende a combinar muebles y colores para darle vida a tu espacio.
@@ -82,7 +50,7 @@
                 </picture>
             </div>
             <div class="texto-entrada">
-                <a href="entrada-blog.html">
+                <a href="entrada-blog.php">
                     <h4>La combinaci&oacute;n perfecta para tus interiores</h4>
                     <p class="informacion-meta">Escrito el: <span>27/08/2021</span> Por: <span>Admin</span></p>
                     <p>Consejos para construir una terraza en el techo de tu casa con los mejores materiales y ahorrando dinero 
@@ -100,7 +68,7 @@
                 </picture>
             </div>
             <div class="texto-entrada">
-                <a href="entrada-blog.html">
+                <a href="entrada-blog.php">
                     <h4>Gu&iacute;a de compras</h4>
                     <p class="informacion-meta">Escrito el: <span>27/08/2021</span> Por: <span>Admin</span></p>
                     <p>Maximiza el espacio en tu hogar con esta gu&iacute;a, aprende a combinar muebles y colores para darle vida a tu espacio.
@@ -110,19 +78,7 @@
         </article>
     </main>
 
-    <footer class="footer seccion">
-        <div class="contenedor contenedor-footer">
-            <nav class="navegacion">
-                <a href="nosotros.html">Nosotros</a>
-                <a href="anuncios.html">Anuncios</a>
-                <a href="blog.html">Blog</a>
-                <a href="contacto.html">Contacto</a>
-            </nav>
-        </div>
-
-        <p class="copyright">Todos los derechos resevados 2021 &copy;</p>
-    </footer>
-
-    <script src="build/js/bundle.min.js"></script>
-</body>
-</html>
+    <!--footer desde template php-->
+    <?php
+        include 'php/templates/footer.php';
+    ?>
