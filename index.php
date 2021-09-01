@@ -4,9 +4,9 @@
      * Si esta presente agrega el texto 'inicio' a las clases
      * definidas en el header
      */
-    $inicio = true;
+    require 'includes/funciones.php'; 
     
-    include 'php/templates/header.php';
+    incluirTemplates('header', $inicio = true);
 ?>
     <main class="contenedor seccion">
         <h1>M&aacute;s Sobre Nosotros</h1>
@@ -186,6 +186,6 @@
     </div>
 
    <!--footer desde template php-->
-   <?php
-        include 'php/templates/footer.php';
-    ?>
+<?php
+    incluirTemplates('footer');
+?>
