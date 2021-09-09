@@ -6,6 +6,7 @@
 
 function conectaDB () : mysqli {
     $db = mysqli_connect('localhost', 'root', 'root', 'bienes_raices');
+    mysqli_set_charset($db, "utf8");
 
     if(!$db) {
         echo 'conexion incorrecta';

@@ -33,10 +33,17 @@
     justify-content: space-between;
 
     h1 {
+        display: none;
         color: $blanco;
         line-height: 1.5;
         font-weight: $bold;
         max-width: 60rem;
         text-align: left;
+    }
+}
+
+.inicio {
+    h1 {
+        display: block;
     }
 }

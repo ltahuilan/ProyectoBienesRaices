@@ -43,4 +43,14 @@
             border-radius: .7rem;
         }
     }
+
+    .tabla {
+    
+        tr {
+            background-color: lighten($grisOscuro, 1);
+            color: $blanco;
+        }
+    
+    }
 }
+
