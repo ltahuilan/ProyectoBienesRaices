@@ -1,4 +1,12 @@
 <?php
+    require '../includes/funciones.php';
+
+    $auth = autenticado();
+
+    if (!$auth) {
+        header('location: /');
+    }
+
 
     // echo '<pre>';
     // var_dump($_SERVER);
@@ -62,7 +70,6 @@
         }        
     }
 
-    require '../includes/funciones.php';
     incluirTemplates('header', $inicio = false, $admin = true);
 
 ?>

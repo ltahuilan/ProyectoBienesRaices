@@ -1,10 +1,11 @@
 
 <?php
+
     /**Variable de apoyo para detectar la página index
      * Si esta presente agrega el texto 'inicio' a las clases
      * definidas en el header
      */
-    require 'includes/funciones.php'; 
+    require 'includes/funciones.php';
     
     incluirTemplates('header', $inicio = true);
 ?>
@@ -33,96 +34,12 @@
     <section class="seccion contenedor">
         <h2>Casas y Depas en Venta</h2>
 
-        <div class="contenedor-anuncios">
-            <div class="anuncio">
-                <picture>
-                    <source srcset="build/img/anuncio1.webp" type="image/webp">
-                    <source srcset="build/img/anuncio1.jpeg" type="image/jpeg">
-                    <img loading="lazy" src="build/img/anuncio1.jpeg" alt="anuncio">
-                </picture>
+        <?php 
+            $limite = 3;
+            require 'includes/templates/anuncios.php';  
+        ?>
+        
 
-                <div class="contenido-anuncio">
-                    <h3>Casa de Lujo en el Lago</h3>
-                    <p>Casa en el lago con excelente vista, acabados de lujo a un excelente precio</p>
-                    <p class="precio">$3,000,000.00</p>
-                    <ul class="iconos-caracteristicas">
-                        <li>
-                            <img class="icono" loading="lazy" src="build/img/icono_wc.svg" alt="icono escusado">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img class="icono" loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono dormitorios">
-                            <p>4</p>
-                        </li>
-                        <li>
-                            <img class="icono" loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamientos">
-                            <p>3</p>
-                        </li>
-                    </ul>
-                    <a class="boton-amarillo-block" href="anuncio.php">Ver Propiedad</a>
-                </div><!--.contenido-anuncio-->
-            </div><!--.anuncio-->
-
-            <div class="anuncio">
-                <picture>
-                    <source srcset="build/img/anuncio2.webp" type="image/webp">
-                    <source srcset="build/img/anuncio2.jpeg" type="image/jpeg">
-                    <img loading="lazy" src="build/img/anuncio2.jpeg" alt="anuncio">
-                </picture>
-
-                <div class="contenido-anuncio">
-                    <h3>Casa con terminados de Lujo</h3>
-                    <p>Casa en el lago con excelente vista, acabados de lujo a un excelente precio</p>
-                    <p class="precio">$2,500,000.00</p>
-
-                    <ul class="iconos-caracteristicas">
-                        <li>
-                            <img class="icono" loading="lazy" src="build/img/icono_wc.svg" alt="icono escusado">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img class="icono" loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono dormitorios">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img class="icono" loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamientos">
-                            <p>2</p>
-                        </li>
-                    </ul>
-                    <a class="boton-amarillo-block" href="anuncio.php">Ver Propiedad</a>
-                </div><!--.contenido-anuncio-->
-            </div><!--.anuncio-->
-
-            <div class="anuncio">
-                <picture>
-                    <source srcset="build/img/anuncio3.webp" type="image/webp">
-                    <source srcset="build/img/anuncio3.jpeg" type="image/jpeg">
-                    <img loading="lazy" src="build/img/anuncio3.jpeg" alt="anuncio">
-                </picture>
-
-                <div class="contenido-anuncio">
-                    <h3>Casa con Alberca</h3>
-                    <p>Casa en el lago con excelente vista, acabados de lujo a un excelente precio</p>
-                    <p class="precio">$5,000,000.00</p>
-
-                    <ul class="iconos-caracteristicas">
-                        <li>
-                            <img class="icono" loading="lazy" src="build/img/icono_wc.svg" alt="icono escusado">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img class="icono" loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono dormitorios">
-                            <p>3</p>
-                        </li>
-                        <li>
-                            <img class="icono" loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamientos">
-                            <p>3</p>
-                        </li>
-                    </ul>
-                    <a class="boton-amarillo-block" href="anuncio.php">Ver Propiedad</a>
-                </div><!--.contenido-anuncio-->
-            </div><!--.anuncio-->
-        </div><!--.contenedor-anuncios-->
         <div class="alinear-derecha">
             <a class="boton-verde" href="anuncio.php">Ver Todas</a>
         </div>

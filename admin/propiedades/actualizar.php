@@ -1,4 +1,12 @@
 <?php
+    require '../../includes/funciones.php';
+
+    $auth = autenticado();
+
+    if (!$auth) {
+        header('location: /');
+    }
+
 
     //validar id de propiedad
     $id = $_GET['id'];
@@ -159,8 +167,7 @@
         }
     }
 
-    // include '../../includes/templates/header.php';
-    require '../../includes/funciones.php';    
+    // include '../../includes/templates/header.php'; 
     incluirTemplates('header', $inicio = false, $admin = true);
 ?>
 

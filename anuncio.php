@@ -1,48 +1,89 @@
 <?php 
-    require 'includes/funciones.php'; 
-    
+    require 'includes/funciones.php';    
     incluirTemplates('header');
+
+    // $id = '';
+
+    /**comprobando que query string esta presente utilizando
+     * operador ternario
+     */
+    isset($_GET['id']) ? $id = $_GET['id'] : $id = null;
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+    if (!$id) {
+        header('location: /');
+    }
+    
+    // var_dump($id);
+    // exit;
+
+    //importar la conexion
+    require __DIR__.'/includes/config/database.php';
+    $conexion = conectaDB();
+
+    //Realñizar la query
+    $query = "SELECT * FROM propiedades WHERE id=${id}";
+
+    //Leer resultados
+    $resultado = mysqli_query($conexion, $query);
+
+    // echo '<pre>';
+    // var_dump($resultado->num_rows);
+    // echo '</pre>';
+
+    /**Si el id existe num_rows devuelve 1
+     * Si no existe devuelve 0
+     * redireccionar la página al inicio si el id no existe
+     */
+    if ($resultado->num_rows === 0) {
+        header('location: /');
+    }
+
+
+    $propiedad = mysqli_fetch_assoc($resultado);
 ?>
 
     <main class="contenedor seccion contenido-centrado  ">
-        <h1>Casa en Venta frente al bosque</h1>
+        <h1><?php echo $propiedad['titulo']; ?></h1>
 
         <div class="anuncio">
             <picture>
-                <source srcset="build/img/destacada.webp" type="image/webp">
-                <source srcset="build/img/destacada.jpg" type="image/jpeg">
-                <img loading="lazy" src="build/img/destacada.jpg" alt="Imagen destacada">
+                <!-- <source srcset="build/img/destacada.webp" type="image/webp">
+                <source srcset="build/img/destacada.jpg" type="image/jpeg"> -->
+                <img loading="lazy" src="/upload_img/<?php echo $propiedad['imagen']; ?>" alt="Imagen destacada">
             </piture>
     
             <div class="contenido-anuncio">
-                <p class="precio">$5,000,000.00</p>
+                <p class="precio">$<?php echo $propiedad['precio']; ?></p>
     
                 <ul class="iconos-caracteristicas">
                     <li>
                         <img class="icono" loading="lazy" src="build/img/icono_wc.svg" alt="icono escusado">
-                        <p>3</p>
+                        <p><?php echo $propiedad['wc']; ?></p>
                     </li>
                     <li>
                         <img class="icono" loading="lazy" src="build/img/icono_dormitorio.svg" alt="icono dormitorios">
-                        <p>3</p>
+                        <p><?php echo $propiedad['habitaciones']; ?></p>
                     </li>
                     <li>
                         <img class="icono" loading="lazy" src="build/img/icono_estacionamiento.svg" alt="icono estacionamientos">
-                        <p>3</p>
+                        <p><?php echo $propiedad['estacionamiento']; ?></p>
                     </li>
                 </ul>
 
                 <p>
-                Proin consequat viverra sapien, malesuada tempor tortor feugiat vitae. In dictum felis et nunc aliquet molestie. Proin tristique commodo felis, sed auctor elit auctor pulvinar. Nunc porta, nibh quis convallis sollicitudin, arcu nisl semper mi, vitae sagittis lorem dolor non risus. Vivamus accumsan maximus est, eu mollis mi. Proin id nisl vel odio semper hendrerit. Nunc porta in justo finibus tempor. Suspendisse lobortis dolor quis elit suscipit molestie. Sed condimentum, erat at tempor finibus, urna nisi fermentum est, a dignissim nisi libero vel est. Donec et imperdiet augue. Curabitur malesuada sodales congue. Suspendisse potenti. Ut sit amet convallis nisi.
-                </p>
-                <p>Aliquam lectus magna, luctus vel gravida nec, iaculis ut augue. Praesent ac enim lorem. Quisque ac dignissim sem, non condimentum orci. Morbi a iaculis neque, ac euismod felis. Fusce augue quam, fermentum sed turpis nec, hendrerit dapibus ante. Cras mattis laoreet nibh, quis tincidunt odio fermentum vel. Nulla facilisi.                    
+                    <?php echo $propiedad['descripcion']; ?>              
                 </p>
             </div><!--.contenido-anuncio-->
 
         </div><!--.anuncio-->
     </main>
-    
+
+   
+
     <!--footer desde template php-->
     <?php
+        mysqli_close($conexion);
+
         incluirTemplates('footer');
     ?>

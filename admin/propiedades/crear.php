@@ -1,14 +1,29 @@
 <?php
 
+    require '../../includes/funciones.php'; 
+
+    $auth = autenticado();
+
+    if (!$auth) {
+        header('location: /');
+    }
+
+
+    //Importar la conexión
     include '../../includes/config/database.php';
     $db = conectaDB();
     // var_dump($db);
 
     // echo "<pre>";
-    // var_dump($_SERVER);
+    // var_dump($db);
     // echo "</pre>";
+    // exit;
 
-    $queryVendedores = mysqli_query($db, "SELECT * FROM vendedores");
+    //Realizar el query
+    $query = "SELECT * FROM vendedores";
+
+    //Obtener los resultados
+    $resultado = mysqli_query($db, $query);
 
     $errores = [];
 
@@ -122,8 +137,7 @@
         }
     }
 
-    // include '../../includes/templates/header.php';
-    require '../../includes/funciones.php';    
+    // include '../../includes/templates/header.php';   
     incluirTemplates('header', $inicio = false, $admin = true);
 ?>
 
@@ -223,7 +237,7 @@
                     <select name="vendedor" >
                         <option value="">-- Seleccionar --</option>
 
-                        <?php while ($vendedor = mysqli_fetch_assoc($queryVendedores)) : ?>
+                        <?php while ($vendedor = mysqli_fetch_assoc($resultado)) : ?>
                             <option <?php echo $vendedorId === $vendedor['id'] ? 'selected' : ''; ?> value="<?php echo $vendedor['id']; ?>"> <?php echo $vendedor['nombre'] . ' ' . $vendedor['apellido']; ?> </option>
                         <?php endwhile?>
 

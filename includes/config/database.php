@@ -5,7 +5,13 @@
  */
 
 function conectaDB () : mysqli {
-    $db = mysqli_connect('localhost', 'root', 'root', 'bienes_raices');
+    $host = "localhost";
+    $usr = 'root';
+    $psw = 'root';
+    $db_name = 'bienes_raices';
+
+    $db = mysqli_connect($host, $usr, $psw, $db_name);
+
     mysqli_set_charset($db, "utf8");
 
     if(!$db) {
