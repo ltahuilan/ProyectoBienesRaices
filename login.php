@@ -1,7 +1,7 @@
 <?php 
 
 
-    include 'includes/config/database.php';
+    include 'includes/app.php';
     $conexion = conectaDB();
     
     $errores = [];
@@ -73,10 +73,6 @@
 
     }
 
-
-
-    //Iincluir el header
-    require 'includes/funciones.php';    
     incluirTemplates('header');
 
 ?>

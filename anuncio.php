@@ -1,5 +1,5 @@
 <?php 
-    require 'includes/funciones.php';    
+    require 'includes/app.php';    
     incluirTemplates('header');
 
     // $id = '';
@@ -18,7 +18,6 @@
     // exit;
 
     //importar la conexion
-    require __DIR__.'/includes/config/database.php';
     $conexion = conectaDB();
 
     //Realñizar la query

@@ -1,0 +1,19 @@
+{
+    "name": "tahuilan/bienesraices_inicio",
+    "description": "Proyecto con POO",
+    "type": "project",
+    
+    "authors": [
+        {
+            "name": "Luis Tahuilan",
+            "email": "ltahuilan.ipn@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload" : {
+        "psr-4": {
+            "App\\": "./class/"
+        }
+    }
+
+}

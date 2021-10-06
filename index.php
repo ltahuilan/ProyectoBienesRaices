@@ -5,7 +5,7 @@
      * Si esta presente agrega el texto 'inicio' a las clases
      * definidas en el header
      */
-    require 'includes/funciones.php';
+    require 'includes/app.php';
     
     incluirTemplates('header', $inicio = true);
 ?>
