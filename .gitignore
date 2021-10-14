@@ -1,3 +1,4 @@
 #Descartar carpeta local de node_modules
 node_modules/
-upload_img/
+#upload_img/
+vendor/

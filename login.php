@@ -8,10 +8,6 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        // echo '<pre>';
-        // var_dump($_POST);
-        // echo '</pre>';
-        // exit;
         
         $email = mysqli_real_escape_string( $conexion, filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) );
         $password = mysqli_real_escape_string( $conexion, $_POST['password'] );
@@ -21,13 +17,13 @@
         
         if (!$email) {            
             $errores[] = 'El correo es obligatorio o no se ingresó uno valido';
-            $_SESSION['err_mail'] = 'El correo es obligatorio o no se ingresó uno valido';
+            $_SESSION[] = 'El correo es obligatorio o no se ingresó uno valido';
 
         }
         
         if (!$password){
             $errores[] = 'El password es obligatorio';
-            $_SESSION['err_psw'] ='El password es obligatorio';
+            $_SESSION[] ='El password es obligatorio';
 
         }
 
@@ -93,12 +89,12 @@
 
                 <div class="grupo">
                     <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" placeholder="Tu email" value="">
+                    <input type="email" name="email" id="email" placeholder="correo@correo.com" value="">
                 </div>
     
                 <div class="grupo">
                     <label for="password">Password:</label>
-                    <input type="password" name="password" id="password" placeholder="Escribe tu password">
+                    <input type="password" name="password" id="password" placeholder="12345">
                     
                 </div>                
             </fieldset>

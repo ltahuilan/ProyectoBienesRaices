@@ -8,9 +8,9 @@ function conectaDB () : mysqli {
     $host = "localhost";
     $usr = 'root';
     $psw = 'root';
-    $db_name = 'bienes_raices';
+    $db_name = 'bienes_raices_crud';
 
-    $db = mysqli_connect($host, $usr, $psw, $db_name);
+    $db = new mysqli($host, $usr, $psw, $db_name);
 
     mysqli_set_charset($db, "utf8");
 
@@ -18,6 +18,5 @@ function conectaDB () : mysqli {
         echo 'conexion incorrecta';
         exit;
     }
-
     return $db;
 };

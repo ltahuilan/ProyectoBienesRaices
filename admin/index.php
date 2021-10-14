@@ -1,17 +1,10 @@
 <?php
-    require '../includes/funciones.php';
 
-    $auth = autenticado();
+    use App\Propiedad;
 
-    if (!$auth) {
-        header('location: /');
-    }
+    require '../includes/app.php';
 
-
-    // echo '<pre>';
-    // var_dump($_SERVER);
-    // echo '</pre>';
-    // exit;
+    autenticado();
 
 
     /**===COMPROBAR EL QUERY STRING=== */
@@ -31,19 +24,13 @@
      */
     $queryString = $_GET['resultado'] ?? null;
 
-    /** == PASOS PARA CONSULTAR LA BASE DE DATOS ==*/
 
-    //PASO 1: Importar la conexión
-    include '../includes/config/database.php';
-    $db = conectaDB();
+    /*** consultando registros en la base de datos ***/
+
+    $propiedades = Propiedad::getTodo ();
 
 
-    //PASO 2: Realizar el query
-    $queryPropiedades = "SELECT * FROM propiedades";
 
-    //PASO 3: Consultar la DB
-    $resultadoQuery = mysqli_query($db, $queryPropiedades);
-    
 
     /**==== ELIMINA PROPIEDAD ===== */
 
@@ -65,7 +52,7 @@
             $resultado = mysqli_query($db, $query);
 
             if ($resultado) {
-                header('location: /admin?resultado=3');
+                header('location: /admin/#id?resultado=3');
             }
         }        
     }
@@ -93,7 +80,7 @@
 
     <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>
 
-    <table class="tabla">
+    <table class="tabla" id="tabla">
         <thead>
             <tr>
                 <th>ID</th>
@@ -107,17 +94,17 @@
         </thead>
 
         <!-- PASO 5: Mostrar los resultados -->
-        <?php while ($propiedad = mysqli_fetch_assoc($resultadoQuery)) : ?>
+        <?php foreach ($propiedades as $propiedad) : ?>
         <tbody>
             <tr>
-                <td><?php echo $propiedad['id']; ?></td>
-                <td><?php echo $propiedad['titulo']; ?></td>
-                <td>$<?php echo $propiedad['precio']; ?> </td>
-                <td class="imagen-propiedad"><img src="/upload_img/<?php echo $propiedad['imagen']; ?>" alt="imagen propiedad"></td>
-                <td><?php echo $propiedad['descripcion']; ?></td>
+                <td><?php echo $propiedad->id; ?></td>
+                <td><?php echo $propiedad->titulo; ?></td>
+                <td>$<?php echo $propiedad->precio; ?> </td>
+                <td class="imagen-propiedad"><img src="/upload_img/<?php echo $propiedad->imagen; ?>" alt="imagen propiedad"></td>
+                <td><?php echo $propiedad->descripcion; ?></td>
                 <?php 
                     //PASO 2: Realizar el query
-                    $vendedorId =  $propiedad['vendedorId'];  
+                    $vendedorId =  $propiedad->vendedorId;  
                     $queryVendedores = "SELECT * FROM vendedores WHERE id=${vendedorId}";
 
                     //PASO 3: Consultar la DB                    
@@ -128,15 +115,15 @@
                 <td>
 
                 <form method="POST" class="w-100">
-                    <input type="hidden" name="id" value="<?php echo $propiedad['id']; ?>">
+                    <input type="hidden" name="id" value="<?php echo $propiedad->id; ?>">
                     <input type="submit" class="boton-rojo-block" value="Eliminar">
                 </form>
 
-                    <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']; ?>" class="boton-amarillo-block">Actualizar</a>
+                    <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad->id; ?>" class="boton-amarillo-block">Actualizar</a>
                 </td>
             </tr>
         </tbody>
-        <?php endwhile ?>
+        <?php endforeach ?>
     </table>
 
     <!-- PASO 6: Cerrar la conexión -->
