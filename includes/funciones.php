@@ -1,6 +1,6 @@
 <?php
 
-define('TEMPLATES_URL', __DIR__.'/templates');
+define('TEMPLATES_URL', __DIR__ . '/templates');
 define('FUNCIONES_URL', 'funciones.php');
 define('DIR_IMAGENES', '../../upload_img/');
 

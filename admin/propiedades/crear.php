@@ -21,18 +21,18 @@
     if($_SERVER["REQUEST_METHOD"] == 'POST') {
         
         /**Instanciar clase y asignar los valores contenidos en $_POST*/
-        $propiedad = new Propiedad($_POST);
+        $propiedad = new Propiedad($_POST['propiedad']);
 
         
         /****** ----GENERAR ARCHIVOS----- ******/ 
-
+        
         //generar nombre unico para la imagen
-        $nombreImg = md5(uniqid(rand(), true) ) . $_FILES['imagen']['name'];
+        $nombreImg = md5(uniqid(rand(), true) ) . $_FILES['propiedad']['name']['imagen'];
         
         
         //Realizar un resize a la archivo de imagen con intervention/image
-        if ($_FILES['imagen']['tmp_name']) {
-            $imagen = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 600);   
+        if ( $_FILES['propiedad']['tmp_name']['imagen'] ) {
+            $imagen = Image::make( $_FILES['propiedad']['tmp_name']['imagen'] )->fit(800, 600);   
             //pasar nombre de la imagen al metodo de la clase
             $propiedad->setImagen($nombreImg);
         }
@@ -53,12 +53,8 @@
             $imagen->save(DIR_IMAGENES . $nombreImg);
 
             //guarda registro en la base de datos
-            $resultado = $propiedad->guardar();
+            $propiedad->guardar();
 
-            /**query string: permite pasar cualquier tipo de valor por medio de la url */
-            // if ($resultado ){
-            //     header('Location: /admin/?resultado=1');
-            // }
         }
     }
 

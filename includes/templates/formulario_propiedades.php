@@ -7,7 +7,7 @@
                     <input 
                         type="text"
                         id="titulo"
-                        name="titulo"
+                        name="propiedad[titulo]"
                         placeholder="Titulo de propiedad"
                         value="<?php echo sanitizarHTML($propiedad->titulo); ?>">
                 </div>
@@ -17,18 +17,23 @@
                     <input
                         type="text"
                         id="precio"
-                        name="precio"
+                        name="propiedad[precio]"
                         placeholder="Precio de propiedad"
                         value="<?php echo sanitizarHTML($propiedad->precio); ?>">                    
                 </div>
 
+                <?php if ($propiedad->imagen) : ?>
+                    <img src="/upload_img/<?php echo $propiedad->imagen?>" alt="" class="imagen-thumb">
+                <?php endif; ?>
+
                 <div class="grupo">
                     <label for="imagen">Imagen:</label>
-                    <input type="file" id="imagen" accept="image/jpeg, image/png" name="imagen">                    
+                    <input type="file" id="imagen" accept="image/jpeg, image/png" name="propiedad[imagen]">                    
                 </div>
+
                 <div class="grupo">
                     <label for="descripcion">Descripción:</label>
-                    <textarea id="descripcion" name="descripcion" placeholder="Descripcion de la propiedad"><?php echo sanitizarHTML($propiedad->descripcion); ?></textarea>
+                    <textarea id="descripcion" name="propiedad[descripcion]" placeholder="Descripcion de la propiedad"><?php echo sanitizarHTML($propiedad->descripcion); ?></textarea>
                 </div>
 
             </fieldset>
@@ -41,7 +46,7 @@
                     <input
                         type="number"
                         id="habitaciones"
-                        name="habitaciones"
+                        name="propiedad[habitaciones]"
                         min="1" max="20"
                         placeholder="Ej.: 3"
                         value="<?php echo sanitizarHTML($propiedad->habitaciones); ?>">
@@ -52,7 +57,7 @@
                     <input
                         type="number"
                         id="wc"
-                        name="wc"
+                        name="propiedad[wc]"
                         min="1" max="20"
                         placeholder="Ej.: 3"
                         value="<?php echo sanitizarHTML($propiedad->wc); ?>">
@@ -63,7 +68,7 @@
                     <input
                         type="number"
                         id="estacionamiento"
-                        name="estacionamiento"
+                        name="propiedad[estacionamiento]"
                         min="0" max="20"
                         placeholder="A partir de 0"
                         value="<?php echo sanitizarHTML($propiedad->estacionamiento); ?>">
@@ -73,7 +78,7 @@
             <fieldset>
                 <legend>Vendedores</legend>
                 <div class="grupo">
-                    <select name="vendedorId" >
+                    <select name="propiedad[vendedorId]" >
                         <option value="">-- Seleccionar --</option>
 
                         <option value="1">Luis Tahuilan</option>

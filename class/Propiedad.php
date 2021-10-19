@@ -27,10 +27,10 @@
 
         public function __construct($args = [])
         {
-            $this->titulo = $args['titulo'] ?? '';
+            $this->titulo = $args['titulo'] ?? NULL;
             $this->precio = $args['precio'] ?? '';
             $this->descripcion = $args['descripcion'] ?? '';
-            $this->imagen = '';
+            $this->imagen = NULL;
             $this->habitaciones = $args['habitaciones'] ?? '';
             $this->wc = $args['wc'] ?? '';
             $this->estacionamiento = $args['estacionamiento'] ?? '';
@@ -50,6 +50,16 @@
 
         public function guardar () {
 
+            if (!is_null($this->id)) {
+                $this->editar();
+            }else {
+                $this->crear();
+            }
+        }
+
+
+        public function crear () {
+
             //llamada a método desde otro método
             $atributos = $this->sanitizaAtributos();
 
@@ -65,8 +75,55 @@
             $query .= "' )";
             
             $resultado = self::$db->query($query);
+
+            /**query string: permite pasar cualquier tipo de valor por medio de la url */
+            if ($resultado ){
+                header('Location: /admin/?resultado=1');
+            }
             
             return $resultado;
+        }
+
+
+        public function editar () {
+
+            //llamada a método desde otro método
+            $atributos = $this->sanitizaAtributos();
+
+            $valores = [];
+
+            foreach ($atributos as $llave => $valor ) {
+                $valores[] = " {$llave} = '$valor' ";
+
+            }
+            
+            $query = "UPDATE propiedades SET ";
+            $query .= join(', ', $valores);
+            $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
+            $query .= " LIMIT 1";
+
+            $resultado = self::$db->query($query);
+
+            if($resultado) {
+                /**query string: permite pasar cualquier tipo de valor por medio de la url */
+                header('Location: /admin?resultado=2');
+            }
+        }
+
+        public function eliminar () {
+
+            //Elima el registro de la DB
+            $query = "DELETE FROM propiedades WHERE id = '" . self::$db->escape_string($this->id) . "' LIMIT 1";
+
+            $resultado = self::$db->query($query);
+
+            if ($resultado) {
+                
+                $this->borrarImagen();
+
+                header('Location: /admin?resultado=3');
+            }
+
         }
 
 
@@ -109,12 +166,33 @@
 
         public function setImagen ($nombre_imagen) {
 
+            //verificar si existe imagen para borrar
+            if (!is_null( $this->id) ) {
+                //verificar si existe imagen para borrar    
+                $existeArchivo = file_exists(DIR_IMAGENES . $this->imagen);
+
+                if ($existeArchivo) {
+                    unlink(DIR_IMAGENES . $this->imagen);
+                }
+
+            }
+
             //asignar al atributo el nombre de la imagen
             if ($nombre_imagen) {
                 $this->imagen = $nombre_imagen;
 
             }
-            // debuguear($this->imagen);
+        }
+
+
+        public function borrarImagen() {
+            
+            //verificar si existe imagen para borrar    
+            $existeArchivo = file_exists('../upload_img/' . $this->imagen);
+
+            if ($existeArchivo) {
+                unlink('../upload_img/' . $this->imagen);
+            }
         }
 
 
@@ -155,7 +233,7 @@
             return self::$errores;
         }
 
-
+        //consultar todos los registros
         public static function getTodo () {
 
             $query = "SELECT * FROM propiedades";
@@ -164,6 +242,21 @@
         }
 
 
+        //consultar registro por id
+        public static function getById ($id) {
+
+            $query = "SELECT * FROM propiedades WHERE id = ${id}";
+
+            $resultado = self::consultaSQL($query);
+
+            return array_shift($resultado); //array_shift devuelve el primer elemento dentro de un arreglo
+
+        }
+
+
+        /**Método que crea un arreglo de objetos con el objeto
+         * que recibe desde crearObjeto()
+         */
         public static function consultaSQL($query) {
 
             //consultar la base de datos
@@ -187,7 +280,9 @@
         }
 
 
-        /**Método que crea un objeto con los datos que recibe como parametros */
+        /**Método que crea un objeto con los datos que recibe 
+         * desde consultaSQL()
+         */
         protected static function crearObjeto (&$registro) {
 
             //se crea una copia en memoria del objeto
@@ -203,6 +298,22 @@
                 }
             }
             return $objeto;
+        }
+
+
+        /**Método que sincroniza el objeto en memoria con
+         * los datos modificados en el formulario
+         */
+
+        public function sincronizar ($args = []) {
+
+            //recorrer arreglo
+            foreach ($args as $llave => $valor) {
+                if ( property_exists($this, $llave) && !is_null($valor)) {
+                    $this->$llave = $valor;
+                }
+            }
+
         }
 
     }

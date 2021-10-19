@@ -8,7 +8,7 @@ function conectaDB () : mysqli {
     $host = "localhost";
     $usr = 'root';
     $psw = 'root';
-    $db_name = 'bienes_raices_crud';
+    $db_name = 'bienes_raices';
 
     $db = new mysqli($host, $usr, $psw, $db_name);
 

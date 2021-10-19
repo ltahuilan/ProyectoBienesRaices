@@ -1,11 +1,11 @@
 <?php
 
     use App\Propiedad;
+    use App\Vendedores;
 
     require '../includes/app.php';
 
     autenticado();
-
 
     /**===COMPROBAR EL QUERY STRING=== */
     $queryString = '';
@@ -14,13 +14,11 @@
     //     $queryString = $_GET['resultado'];
     // }
 
-    /**comprobando que query string esta presente utilizando
-     * operador ternario
+    /**comprobando que query string esta presente utilizando operador ternario
      */
-    isset($_GET['resultado']) ? $queryString = $_GET['resultado'] : $queryString = null;
+    // isset($_GET['resultado']) ? $queryString = $_GET['resultado'] : $queryString = null;
 
-    /**comprobando si el query string esta presente utilizando
-     * el operador ?? 
+    /**comprobando si el query string esta presente utilizando el operador ?? 
      */
     $queryString = $_GET['resultado'] ?? null;
 
@@ -30,30 +28,20 @@
     $propiedades = Propiedad::getTodo ();
 
 
-
-
     /**==== ELIMINA PROPIEDAD ===== */
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
         $id = $_POST['id'];
         $id = filter_var($id, FILTER_VALIDATE_INT);
 
+        
         if($id) {
-            //Elimina la imagen del repositorio
-            $query = "SELECT imagen FROM propiedades WHERE id = ${id}";
-            $resultado = mysqli_query($db, $query);
-            $imgNombre = mysqli_fetch_assoc($resultado);
-            var_dump($imgNombre['imagen']);
+            
+            $propiedad = Propiedad::getById($id);
+    
+            $propiedad->eliminar();
 
-            unlink('../upload_img/' . $imgNombre['imagen']);
-
-            //Elima el registro de la DB
-            $query = "DELETE FROM propiedades WHERE id = ${id}";
-            $resultado = mysqli_query($db, $query);
-
-            if ($resultado) {
-                header('location: /admin/#id?resultado=3');
-            }
         }        
     }
 
@@ -66,15 +54,15 @@
 
     <?php if (intval($queryString) === 1) :?>
         <div class="alerta correcto id-1">
-            <?php echo 'Propiedad creada con éxito'?>
+            <?php echo 'Propiedad creada con éxito'; ?>
         </div>
     <?php elseif(intval($queryString) === 2) : ?>
         <div class="alerta correcto id-2">
-            <?php echo 'Propiedad actualizada correctamente'?>
+            <?php echo 'Propiedad actualizada correctamente'; ?>
         </div>
     <?php elseif(intval($queryString) === 3) : ?>
         <div class="alerta correcto id-3">
-            <?php echo 'Propiedad eliminada correctamente'?>
+            <?php echo 'Propiedad eliminada correctamente'; ?>
         </div>
     <?php endif ?>
 
