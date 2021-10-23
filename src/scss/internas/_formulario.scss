@@ -43,15 +43,4 @@
         font-weight: $bold;
     }
 
-    input[type="submit"] {
-        @include boton ($verde, block);
-        width: 100%;
-        
-        @include tablet {
-            @include boton ($verde, inline-block);
-            width: auto;
-        }
-    }
-
-
 }

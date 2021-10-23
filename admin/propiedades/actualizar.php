@@ -1,31 +1,31 @@
 <?php
 
 use App\Propiedad;
+use App\Vendedor;
 use Intervention\Image\ImageManagerStatic as Image; //Uso de la clase ImagenManager y asignar alias 'Imagen' para implementación ágil
 
-require '../../includes/app.php';
+    require '../../includes/app.php';
 
-   autenticado();
+    autenticado();
 
     //validar id de propiedad
     $id = $_GET['id'];
     $id = filter_var($id, FILTER_VALIDATE_INT);
 
+    //Redireccionar si no esta autenticado
     if (!$id) {
         header('Location: /admin');
     }
 
-
-    //consulta para obtener los registros de propiedades
-    
+    //consulta para obtener los registros de propiedades    
     $propiedad = Propiedad::getById($id);
 
-    //consulta para obtener los registros de vendedores
-    $queryVendedores = mysqli_query($db, "SELECT * FROM vendedores");
+    //obtener todos los vendedores
+    $vendedores = Vendedor::getTodo();
 
     $errores = Propiedad::getErrores();   
     
-    if($_SERVER["REQUEST_METHOD"] == 'POST') {
+    if ( $_SERVER["REQUEST_METHOD"] === 'POST' ) {
 
         $args = [];
         /**Asignar los atributos
@@ -84,9 +84,7 @@ require '../../includes/app.php';
 
         <a href="../index.php" class="boton boton-verde">Regresar</a>
 
-        <form
-        class="formulario" method="POST"        
-        enctype="multipart/form-data">
+        <form class="formulario" method="POST" enctype="multipart/form-data">
         <!--enctype="multipart/form-data" atributo que permite leer archivos, info visible desde superglobal $_FILES-->
 
             <?php include '../../includes/templates/formulario_propiedades.php'?>

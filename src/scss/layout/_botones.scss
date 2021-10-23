@@ -15,6 +15,7 @@
 
 .boton-verde {
     @include boton ($verde, inline-block);
+    margin-right: 2rem;
 }
 
 .boton-rojo-block {

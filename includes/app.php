@@ -4,14 +4,14 @@ require 'funciones.php';
 require 'config/database.php';
 require __DIR__.'../../vendor/autoload.php';
 
-use App\Propiedad;
+use App\ActiveRecord;
 
 
 //almacenando la conexión en una variable
 $db = conectaDB();
 
-//instanciando la clase Propiedad
-$propiedad = new Propiedad;
+//instancir o crear objeto de la clase 
+$propiedad = new ActiveRecord;
 
 
 /**Pasamos el parámetro de la conexion a la clase

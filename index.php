@@ -37,13 +37,12 @@
         <h2>Casas y Depas en Venta</h2>
 
         <?php 
-            $limite = 3;
             require 'includes/templates/anuncios.php';  
         ?>
         
 
         <div class="alinear-derecha">
-            <a class="boton-verde" href="anuncio.php">Ver Todas</a>
+            <a class="boton-verde" href="anuncios.php">Ver Todas</a>
         </div>
     </section>
 

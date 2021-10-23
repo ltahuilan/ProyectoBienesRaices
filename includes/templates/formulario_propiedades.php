@@ -81,7 +81,13 @@
                     <select name="propiedad[vendedorId]" >
                         <option value="">-- Seleccionar --</option>
 
-                        <option value="1">Luis Tahuilan</option>
+                        <?php foreach ($vendedores as $vendedor) : ?>
+                            
+                            <option 
+                                <?php echo $propiedad->vendedorId === $vendedor->id ? 'selected' : ''?>
+                                value=<?php echo $vendedor->id?> ><?php echo $vendedor->nombre . " " . $vendedor->apellido?></option>
+
+                        <?php endforeach ; ?>
 
                     </select>
                 </div>

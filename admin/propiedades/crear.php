@@ -2,19 +2,17 @@
 
     require '../../includes/app.php'; 
     use App\Propiedad;
+    use App\Vendedor;
     use Intervention\Image\ImageManagerStatic as Image; //Uso de la clase ImagenManager y asignar alias 'Imagen' para implementación ágil
 
 
     autenticado();
 
-    $db = conectaDB();
-    
+    $db = conectaDB(); 
+    $propiedad = new Propiedad;   
 
-    //Realizar el query
-    $query = "SELECT * FROM vendedores";
-
-    //Obtener los resultados
-    $resultado = mysqli_query($db, $query);
+    //Obtener todos los vendedores
+    $vendedores = Vendedor::getTodo();
 
     $errores = Propiedad::getErrores();
     
@@ -83,7 +81,7 @@
 
             <?php include '../../includes/templates/formulario_propiedades.php'?>
 
-            <input type="submit" value="Crear Propiedad" class="boton boton-verde">
+            <input type="submit" value="Crear Propiedad" class="boton boton-verde oculto">
         </form>
 
     </main>

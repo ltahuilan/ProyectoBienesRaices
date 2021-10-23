@@ -1,7 +1,7 @@
 <?php
 
     use App\Propiedad;
-    use App\Vendedores;
+    use App\Vendedor;
 
     require '../includes/app.php';
 
@@ -18,30 +18,39 @@
      */
     // isset($_GET['resultado']) ? $queryString = $_GET['resultado'] : $queryString = null;
 
-    /**comprobando si el query string esta presente utilizando el operador ?? 
+    /**comprobando si el query string esta presente utilizando el operador coalescente ?? 
      */
     $queryString = $_GET['resultado'] ?? null;
 
 
     /*** consultando registros en la base de datos ***/
 
-    $propiedades = Propiedad::getTodo ();
+    $propiedades = Propiedad::getTodo();
+    $vendedores = Vendedor::getTodo();
 
 
     /**==== ELIMINA PROPIEDAD ===== */
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
+        //validar id
         $id = $_POST['id'];
         $id = filter_var($id, FILTER_VALIDATE_INT);
-
         
         if($id) {
-            
-            $propiedad = Propiedad::getById($id);
-    
-            $propiedad->eliminar();
 
+            $tipo = $_POST['tipo'];
+
+            if (tipoContenido($tipo)) {
+                
+                if ($tipo === 'propiedad') {
+                    $propiedad = Propiedad::getById($id);    
+                    $propiedad->eliminar();
+                }else if ($tipo === 'vendedor') {
+                    $vendedores = Vendedor::getById($id);
+                    $vendedores->eliminar();
+                }
+            }          
         }        
     }
 
@@ -52,21 +61,17 @@
 <main class="contenedor seccion contenido-centrado">
     <h1>Administrador de Bienes Raices</h1>
 
-    <?php if (intval($queryString) === 1) :?>
-        <div class="alerta correcto id-1">
-            <?php echo 'Propiedad creada con éxito'; ?>
-        </div>
-    <?php elseif(intval($queryString) === 2) : ?>
-        <div class="alerta correcto id-2">
-            <?php echo 'Propiedad actualizada correctamente'; ?>
-        </div>
-    <?php elseif(intval($queryString) === 3) : ?>
-        <div class="alerta correcto id-3">
-            <?php echo 'Propiedad eliminada correctamente'; ?>
-        </div>
-    <?php endif ?>
+    <?php $mensaje = mostrarNotificacion($queryString); ?>
+
+    <?php if ($mensaje) : ?>
+        <p class="alerta correcto"><?php echo sanitizarHTML($mensaje); ?></p>
+    <?php endif; ?>
+
 
     <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>
+    <a href="/admin/vendedores/crear.php" class="boton boton-verde">Nuevo Vendedor(a)</a>
+    
+    <h1>Propiedades</h1>
 
     <table class="tabla" id="tabla">
         <thead>
@@ -81,7 +86,7 @@
             </tr>
         </thead>
 
-        <!-- PASO 5: Mostrar los resultados -->
+        <!--Mostrar los resultados -->
         <?php foreach ($propiedades as $propiedad) : ?>
         <tbody>
             <tr>
@@ -90,24 +95,58 @@
                 <td>$<?php echo $propiedad->precio; ?> </td>
                 <td class="imagen-propiedad"><img src="/upload_img/<?php echo $propiedad->imagen; ?>" alt="imagen propiedad"></td>
                 <td><?php echo $propiedad->descripcion; ?></td>
-                <?php 
-                    //PASO 2: Realizar el query
-                    $vendedorId =  $propiedad->vendedorId;  
-                    $queryVendedores = "SELECT * FROM vendedores WHERE id=${vendedorId}";
+                    <?php                    
+                        foreach ($vendedores as $vendedor) {
+                            if ($propiedad->vendedorId === $vendedor->id) {
+                                $nombreVendedor = $vendedor->nombre . ' ' . $vendedor->apellido;
+                            }
+                        }                    
+                    ?>    
+                <td><?php echo  $nombreVendedor; ?></td>
+                <td class="boton-eliminar">
+                    <form method="POST" class="w-100">
+                        <input type="hidden" name="id" value="<?php echo $propiedad->id; ?>">
+                        <input type="hidden" name="tipo" value="propiedad">
+                        <input type="submit" value="Eliminar" class="boton boton-rojo-block">
+                    </form>
+                    
+                    <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad->id; ?>" class="boton-amarillo-block">Editar</a>
+                </td>
+            </tr>
+        </tbody>
+        <?php endforeach ?>
+    </table>
 
-                    //PASO 3: Consultar la DB                    
-                    $resultadoQueryV = mysqli_query($db, $queryVendedores);
-                    $vendedor = mysqli_fetch_assoc($resultadoQueryV);
-                ?>                
-                <td><?php echo  $vendedor['nombre'] . ' ' . $vendedor['apellido']; ?></td>
-                <td>
+    <h1>Vendedores</h1>
+    
+    <table class="tabla" id="tabla">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
 
-                <form method="POST" class="w-100">
-                    <input type="hidden" name="id" value="<?php echo $propiedad->id; ?>">
+        <?php foreach ($vendedores as $vendedor) : ?>
+        <tbody>
+            <tr>
+                <td><?php echo $vendedor->id; ?></td>
+                <td><?php echo $vendedor->nombre . ' ' .$vendedor->apellido; ?></td>              
+                <td><?php echo  $vendedor->telefono; ?></td>
+                <td><?php echo $vendedor->email?></td>
+                <td >
+
+                <form method="POST">
+                    <input type="hidden" name="id" value="<?php echo $vendedor->id; ?>">
+                    <input type="hidden" name="tipo" value="vendedor">
                     <input type="submit" class="boton-rojo-block" value="Eliminar">
                 </form>
 
-                    <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad->id; ?>" class="boton-amarillo-block">Actualizar</a>
+                    <a href="/admin/vendedores/actualizar.php?id=<?php echo $vendedor->id; ?>" class="boton-amarillo-block">Editar</a>
+
                 </td>
             </tr>
         </tbody>

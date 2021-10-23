@@ -4,4 +4,4 @@
 
     $_SESSION = [];
 
-    header('location: /');
+    header('location: /index.php');
